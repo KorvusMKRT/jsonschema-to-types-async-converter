@@ -8,3 +8,7 @@ A deep package for converting JSON Schema to links
 3. Insert link with JSON Schema value
 4. Insert `Convert` link from link with JSON Schema to the container
 
+
+
+https://github.com/KorvusMKRT/jsonschema-to-types-async-converter/assets/105720676/a0796995-2f9e-4bda-acf3-6714f7d7ce82
+
