@@ -1,0 +1,12 @@
+{
+  "name": "@korvusmkrt/jsonschema-to-types-async-converter",
+  "dependencies": {
+    "@deep-foundation/core": "~0.0.2",
+    "@deep-foundation/tsx": "~0.0.5",
+    "@korvusmkrt/jsonschema-to-types-async-converter": "^1.1.0"
+  },
+  "version": "1.2.0",
+  "keywords": [
+    "deep-package"
+  ]
+}

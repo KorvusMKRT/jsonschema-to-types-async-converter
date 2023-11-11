@@ -1,0 +1,113 @@
+{
+  "package": {
+    "name": "@korvusmkrt/jsonschema-to-types-async-converter",
+    "version": "1.0.0"
+  },
+  "data": [
+    {
+      "package": {
+        "dependencyId": 0,
+        "containValue": "SyncTextFile"
+      },
+      "id": 1
+    },
+    {
+      "package": {
+        "dependencyId": 1,
+        "containValue": "TSX"
+      },
+      "id": 2
+    },
+    {
+      "package": {
+        "dependencyId": 0,
+        "containValue": "GeneratedFrom"
+      },
+      "id": 3
+    },
+    {
+      "package": {
+        "dependencyId": 0,
+        "containValue": "Handler"
+      },
+      "id": 4
+    },
+    {
+      "package": {
+        "dependencyId": 0,
+        "containValue": "dockerSupportsJs"
+      },
+      "id": 5
+    },
+    {
+      "package": {
+        "dependencyId": 0,
+        "containValue": "Type"
+      },
+      "id": 6
+    },
+    {
+      "package": {
+        "dependencyId": 0,
+        "containValue": "Any"
+      },
+      "id": 7
+    },
+    {
+      "package": {
+        "dependencyId": 0,
+        "containValue": "HandleInsert"
+      },
+      "id": 8
+    },
+    {
+      "id": "convertInsertHandlerGeneratedTextFile",
+      "type": 1,
+      "value": {
+        "value": "async ({ data: { newLink: convertLink }, deep }) => {\n    const logs = [];\n    try {\n        const jsonSchema = await getJsonSchema(convertLink);\n        logs.push({ jsonSchema });\n        const { properties } = jsonSchema;\n        logs.push({ properties });\n        if (!properties) {\n            throw new Error(`JsonSchema does not have properties:${JSON.stringify(jsonSchema)}`);\n        }\n        for (const [key, value] of Object.entries(properties)) {\n            await deep.insert({\n                type_id: await deep.id(`@deep-foundation/core`, `Type`),\n                in: {\n                    data: {\n                        type_id: await deep.id(`@deep-foundation/core`, `Contain`),\n                        from_id: convertLink.to_id,\n                        string: {\n                            data: {\n                                value: key\n                            }\n                        }\n                    }\n                },\n                out: {\n                    data: {\n                        type_id: await deep.id(`@deep-foundation/core`, 'Value'),\n                        to_id: await deep.id(`@deep-foundation/core`, `Object`)\n                    }\n                }\n            });\n        }\n    }\n    catch (error) {\n        throw JSON.stringify({ logs, error });\n    }\n    async function getJsonSchema(convertLink) {\n        const { data: [linkWithJsonSchema] } = await deep.select({\n            id: convertLink.from_id\n        });\n        logs.push({ linkWithJsonSchema });\n        if (!linkWithJsonSchema) {\n            throw new Error(`Unable to get ${convertLink.from_id}`);\n        }\n        const value = linkWithJsonSchema.value?.value;\n        if (!value) {\n            throw new Error(`${linkWithJsonSchema.id} does not have a value`);\n        }\n        else if (typeof value === `string`) {\n            return JSON.parse(value);\n        }\n        else if (typeof value === `object`) {\n            return value;\n        }\n        else\n            throw Error(`${linkWithJsonSchema.id} contains value of type ${typeof value} that is not supported`);\n    }\n};\n\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibW9kdWxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsibW9kdWxlLnRzeCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFLQSxLQUFLLEVBQUUsRUFBRSxJQUFJLEVBQUUsRUFBRSxPQUFPLEVBQUUsV0FBVyxFQUFFLEVBQUUsSUFBSSxFQUs1QyxFQUFFLEVBQUU7SUFDRCxNQUFNLElBQUksR0FBZSxFQUFFLENBQUM7SUFDNUIsSUFBSTtRQUVBLE1BQU0sVUFBVSxHQUlaLE1BQU0sYUFBYSxDQUFDLFdBQVcsQ0FBQyxDQUFDO1FBRXJDLElBQUksQ0FBQyxJQUFJLENBQUMsRUFBRSxVQUFVLEVBQUUsQ0FBQyxDQUFDO1FBQzFCLE1BQU0sRUFBRSxVQUFVLEVBQUUsR0FBRyxVQUFVLENBQUM7UUFDbEMsSUFBSSxDQUFDLElBQUksQ0FBQyxFQUFFLFVBQVUsRUFBRSxDQUFDLENBQUM7UUFDMUIsSUFBSSxDQUFDLFVBQVUsRUFBRTtZQUNiLE1BQU0sSUFBSSxLQUFLLENBQUMsdUNBQXVDLElBQUksQ0FBQyxTQUFTLENBQUMsVUFBVSxDQUFDLEVBQUUsQ0FBQyxDQUFDO1NBQ3hGO1FBQ0QsS0FBSyxNQUFNLENBQUMsR0FBRyxFQUFFLEtBQUssQ0FBQyxJQUFJLE1BQU0sQ0FBQyxPQUFPLENBQUMsVUFBVSxDQUFDLEVBQUU7WUFDbkQsTUFBTSxJQUFJLENBQUMsTUFBTSxDQUFDO2dCQUNkLE9BQU8sRUFBRSxNQUFNLElBQUksQ0FBQyxFQUFFLENBQUMsdUJBQXVCLEVBQUUsTUFBTSxDQUFDO2dCQUN2RCxFQUFFLEVBQUU7b0JBQ0EsSUFBSSxFQUFFO3dCQUNGLE9BQU8sRUFBRSxNQUFNLElBQUksQ0FBQyxFQUFFLENBQUMsdUJBQXVCLEVBQUUsU0FBUyxDQUFDO3dCQUMxRCxPQUFPLEVBQUUsV0FBVyxDQUFDLEtBQUs7d0JBQzFCLE1BQU0sRUFBRTs0QkFDSixJQUFJLEVBQUU7Z0NBQ0YsS0FBSyxFQUFFLEdBQUc7NkJBQ2I7eUJBQ0o7cUJBQ0o7aUJBQ0o7Z0JBQ0QsR0FBRyxFQUFFO29CQUNELElBQUksRUFBRTt3QkFDRixPQUFPLEVBQUUsTUFBTSxJQUFJLENBQUMsRUFBRSxDQUFDLHVCQUF1QixFQUFFLE9BQU8sQ0FBQzt3QkFDeEQsS0FBSyxFQUFFLE1BQU0sSUFBSSxDQUFDLEVBQUUsQ0FBQyx1QkFBdUIsRUFBRSxRQUFRLENBQUM7cUJBQzFEO2lCQUNKO2FBRUosQ0FBQyxDQUFBO1NBQ0w7S0FDSjtJQUFDLE9BQU8sS0FBSyxFQUFFO1FBQ1osTUFBTSxJQUFJLENBQUMsU0FBUyxDQUFDLEVBQUUsSUFBSSxFQUFFLEtBQUssRUFBRSxDQUFDLENBQUE7S0FDeEM7SUFFTCxLQUFLLFVBQVUsYUFBYSxDQUFDLFdBQXdCO1FBQ2pELE1BQU0sRUFBRSxJQUFJLEVBQUUsQ0FBQyxrQkFBa0IsQ0FBQyxFQUFFLEdBQUcsTUFBTSxJQUFJLENBQUMsTUFBTSxDQUFDO1lBQ3JELEVBQUUsRUFBRSxXQUFXLENBQUMsT0FBTztTQUMxQixDQUFDLENBQUM7UUFDSCxJQUFJLENBQUMsSUFBSSxDQUFDLEVBQUUsa0JBQWtCLEVBQUUsQ0FBQyxDQUFDO1FBQ2xDLElBQUksQ0FBQyxrQkFBa0IsRUFBRTtZQUNyQixNQUFNLElBQUksS0FBSyxDQUFDLGlCQUFpQixXQUFXLENBQUMsT0FBTyxFQUFFLENBQUMsQ0FBQztTQUUzRDtRQUNELE1BQU0sS0FBSyxHQUFHLGtCQUFrQixDQUFDLEtBQUssRUFBRSxLQUFLLENBQUE7UUFDN0MsSUFBSSxDQUFDLEtBQUssRUFBRTtZQUNSLE1BQU0sSUFBSSxLQUFLLENBQUMsR0FBRyxrQkFBa0IsQ0FBQyxFQUFFLHdCQUF3QixDQUFDLENBQUE7U0FDcEU7YUFDSSxJQUFJLE9BQU8sS0FBSyxLQUFLLFFBQVEsRUFBQztZQUMvQixPQUFPLElBQUksQ0FBQyxLQUFLLENBQUMsS0FBSyxDQUFDLENBQUE7U0FDM0I7YUFDSSxJQUFJLE9BQU8sS0FBSyxLQUFLLFFBQVEsRUFBQztZQUMvQixPQUFPLEtBQUssQ0FBQTtTQUNmOztZQUNJLE1BQU0sS0FBSyxDQUFFLEdBQUcsa0JBQWtCLENBQUMsRUFBRSwyQkFBMkIsT0FBTyxLQUFLLHdCQUF3QixDQUFDLENBQUE7SUFDOUcsQ0FBQztBQUdELENBQUMsQ0FBQSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IERlZXBDbGllbnQgfSBmcm9tIFwiQGRlZXAtZm91bmRhdGlvbi9kZWVwbGlua3MvaW1wb3J0cy9jbGllbnQuanNcIjtcclxuaW1wb3J0IHsgTGluayB9IGZyb20gXCJAZGVlcC1mb3VuZGF0aW9uL2RlZXBsaW5rcy9pbXBvcnRzL21pbmlsaW5rcy5qc1wiO1xyXG5pbXBvcnQgeyBEZWVwQ2xpZW50SW5zdGFuY2UgfSBmcm9tIFwiQGRlZXAtZm91bmRhdGlvbi9kZWVwbGlua3MvaW1wb3J0cy9jbGllbnRcIjtcclxuXHJcblxyXG5hc3luYyAoeyBkYXRhOiB7IG5ld0xpbms6IGNvbnZlcnRMaW5rIH0sIGRlZXAgfToge1xyXG4gICAgZGVlcDogRGVlcENsaWVudDtcclxuICAgIGRhdGE6IHtcclxuICAgICAgICBuZXdMaW5rOiBMaW5rPG51bWJlcj47XHJcbiAgICB9O1xyXG59KSA9PiB7XHJcbiAgICBjb25zdCBsb2dzOiBBcnJheTxhbnk+ID0gW107XHJcbiAgICB0cnkge1xyXG4gICAgICAgIFxyXG4gICAgICAgIGNvbnN0IGpzb25TY2hlbWE6IHtcclxuICAgICAgICAgICAgcHJvcGVydGllczogUmVjb3JkPHN0cmluZywge1xyXG4gICAgICAgICAgICAgICAgdHlwZTogc3RyaW5nO1xyXG4gICAgICAgICAgICB9PjtcclxuICAgICAgICB9ID0gYXdhaXQgZ2V0SnNvblNjaGVtYShjb252ZXJ0TGluayk7XHJcblxyXG4gICAgICAgIGxvZ3MucHVzaCh7IGpzb25TY2hlbWEgfSk7XHJcbiAgICAgICAgY29uc3QgeyBwcm9wZXJ0aWVzIH0gPSBqc29uU2NoZW1hO1xyXG4gICAgICAgIGxvZ3MucHVzaCh7IHByb3BlcnRpZXMgfSk7XHJcbiAgICAgICAgaWYgKCFwcm9wZXJ0aWVzKSB7XHJcbiAgICAgICAgICAgIHRocm93IG5ldyBFcnJvcihgSnNvblNjaGVtYSBkb2VzIG5vdCBoYXZlIHByb3BlcnRpZXM6JHtKU09OLnN0cmluZ2lmeShqc29uU2NoZW1hKX1gKTtcclxuICAgICAgICB9XHJcbiAgICAgICAgZm9yIChjb25zdCBba2V5LCB2YWx1ZV0gb2YgT2JqZWN0LmVudHJpZXMocHJvcGVydGllcykpIHtcclxuICAgICAgICAgICAgYXdhaXQgZGVlcC5pbnNlcnQoe1xyXG4gICAgICAgICAgICAgICAgdHlwZV9pZDogYXdhaXQgZGVlcC5pZChgQGRlZXAtZm91bmRhdGlvbi9jb3JlYCwgYFR5cGVgKSxcclxuICAgICAgICAgICAgICAgIGluOiB7XHJcbiAgICAgICAgICAgICAgICAgICAgZGF0YToge1xyXG4gICAgICAgICAgICAgICAgICAgICAgICB0eXBlX2lkOiBhd2FpdCBkZWVwLmlkKGBAZGVlcC1mb3VuZGF0aW9uL2NvcmVgLCBgQ29udGFpbmApLFxyXG4gICAgICAgICAgICAgICAgICAgICAgICBmcm9tX2lkOiBjb252ZXJ0TGluay50b19pZCxcclxuICAgICAgICAgICAgICAgICAgICAgICAgc3RyaW5nOiB7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICBkYXRhOiB7XHJcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgdmFsdWU6IGtleVxyXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICAgICAgfVxyXG4gICAgICAgICAgICAgICAgfSxcclxuICAgICAgICAgICAgICAgIG91dDoge1xyXG4gICAgICAgICAgICAgICAgICAgIGRhdGE6IHtcclxuICAgICAgICAgICAgICAgICAgICAgICAgdHlwZV9pZDogYXdhaXQgZGVlcC5pZChgQGRlZXAtZm91bmRhdGlvbi9jb3JlYCwgJ1ZhbHVlJyksXHJcbiAgICAgICAgICAgICAgICAgICAgICAgIHRvX2lkOiBhd2FpdCBkZWVwLmlkKGBAZGVlcC1mb3VuZGF0aW9uL2NvcmVgLCBgT2JqZWN0YClcclxuICAgICAgICAgICAgICAgICAgICB9XHJcbiAgICAgICAgICAgICAgICB9XHJcblxyXG4gICAgICAgICAgICB9KVxyXG4gICAgICAgIH1cclxuICAgIH0gY2F0Y2ggKGVycm9yKSB7XHJcbiAgICAgICAgdGhyb3cgSlNPTi5zdHJpbmdpZnkoeyBsb2dzLCBlcnJvciB9KVxyXG4gICAgfVxyXG5cclxuYXN5bmMgZnVuY3Rpb24gZ2V0SnNvblNjaGVtYShjb252ZXJ0TGluazpMaW5rPG51bWJlcj4pe1xyXG4gICAgY29uc3QgeyBkYXRhOiBbbGlua1dpdGhKc29uU2NoZW1hXSB9ID0gYXdhaXQgZGVlcC5zZWxlY3Qoe1xyXG4gICAgICAgIGlkOiBjb252ZXJ0TGluay5mcm9tX2lkXHJcbiAgICB9KTtcclxuICAgIGxvZ3MucHVzaCh7IGxpbmtXaXRoSnNvblNjaGVtYSB9KTtcclxuICAgIGlmICghbGlua1dpdGhKc29uU2NoZW1hKSB7XHJcbiAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBVbmFibGUgdG8gZ2V0ICR7Y29udmVydExpbmsuZnJvbV9pZH1gKTtcclxuXHJcbiAgICB9XHJcbiAgICBjb25zdCB2YWx1ZSA9IGxpbmtXaXRoSnNvblNjaGVtYS52YWx1ZT8udmFsdWVcclxuICAgIGlmICghdmFsdWUpIHtcclxuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYCR7bGlua1dpdGhKc29uU2NoZW1hLmlkfSBkb2VzIG5vdCBoYXZlIGEgdmFsdWVgKVxyXG4gICAgfVxyXG4gICAgZWxzZSBpZiAodHlwZW9mIHZhbHVlID09PSBgc3RyaW5nYCl7XHJcbiAgICAgICAgcmV0dXJuIEpTT04ucGFyc2UodmFsdWUpXHJcbiAgICB9XHJcbiAgICBlbHNlIGlmICh0eXBlb2YgdmFsdWUgPT09IGBvYmplY3RgKXtcclxuICAgICAgICByZXR1cm4gdmFsdWUgXHJcbiAgICB9XHJcbiAgICBlbHNlIHRocm93IEVycm9yIChgJHtsaW5rV2l0aEpzb25TY2hlbWEuaWR9IGNvbnRhaW5zIHZhbHVlIG9mIHR5cGUgJHt0eXBlb2YgdmFsdWV9IHRoYXQgaXMgbm90IHN1cHBvcnRlZGApXHJcbn1cclxuXHJcblxyXG59XHJcblxyXG5cclxuXHJcblxyXG5cclxuXHJcblxyXG5cclxuXHJcblxyXG5cclxuXHJcblxyXG5cclxuXHJcblxyXG5cclxuXHJcblxyXG5cclxuXHJcblxyXG5cclxuXHJcblxyXG5cclxuXHJcbiJdfQ=="
+      }
+    },
+    {
+      "id": "convertInsertHanlderCode",
+      "type": 2,
+      "value": {
+        "value": "import { DeepClient } from \"@deep-foundation/deeplinks/imports/client.js\";\r\nimport { Link } from \"@deep-foundation/deeplinks/imports/minilinks.js\";\r\nimport { DeepClientInstance } from \"@deep-foundation/deeplinks/imports/client\";\r\n\r\n\r\nasync ({ data: { newLink: convertLink }, deep }: {\r\n    deep: DeepClient;\r\n    data: {\r\n        newLink: Link<number>;\r\n    };\r\n}) => {\r\n    const logs: Array<any> = [];\r\n    try {\r\n        \r\n        const jsonSchema: {\r\n            properties: Record<string, {\r\n                type: string;\r\n            }>;\r\n        } = await getJsonSchema(convertLink);\r\n\r\n        logs.push({ jsonSchema });\r\n        const { properties } = jsonSchema;\r\n        logs.push({ properties });\r\n        if (!properties) {\r\n            throw new Error(`JsonSchema does not have properties:${JSON.stringify(jsonSchema)}`);\r\n        }\r\n        for (const [key, value] of Object.entries(properties)) {\r\n            await deep.insert({\r\n                type_id: await deep.id(`@deep-foundation/core`, `Type`),\r\n                in: {\r\n                    data: {\r\n                        type_id: await deep.id(`@deep-foundation/core`, `Contain`),\r\n                        from_id: convertLink.to_id,\r\n                        string: {\r\n                            data: {\r\n                                value: key\r\n                            }\r\n                        }\r\n                    }\r\n                },\r\n                out: {\r\n                    data: {\r\n                        type_id: await deep.id(`@deep-foundation/core`, 'Value'),\r\n                        to_id: await deep.id(`@deep-foundation/core`, `Object`)\r\n                    }\r\n                }\r\n\r\n            })\r\n        }\r\n    } catch (error) {\r\n        throw JSON.stringify({ logs, error })\r\n    }\r\n\r\nasync function getJsonSchema(convertLink:Link<number>){\r\n    const { data: [linkWithJsonSchema] } = await deep.select({\r\n        id: convertLink.from_id\r\n    });\r\n    logs.push({ linkWithJsonSchema });\r\n    if (!linkWithJsonSchema) {\r\n        throw new Error(`Unable to get ${convertLink.from_id}`);\r\n\r\n    }\r\n    const value = linkWithJsonSchema.value?.value\r\n    if (!value) {\r\n        throw new Error(`${linkWithJsonSchema.id} does not have a value`)\r\n    }\r\n    else if (typeof value === `string`){\r\n        return JSON.parse(value)\r\n    }\r\n    else if (typeof value === `object`){\r\n        return value \r\n    }\r\n    else throw Error (`${linkWithJsonSchema.id} contains value of type ${typeof value} that is not supported`)\r\n}\r\n\r\n\r\n}\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n"
+      }
+    },
+    {
+      "id": "convertInsertHandlerGeneratedFrom",
+      "type": 3,
+      "from": "convertInsertHandlerGeneratedTextFile",
+      "to": "convertInsertHanlderCode"
+    },
+    {
+      "id": "convertInsertHandler",
+      "type": 4,
+      "from": 5,
+      "to": "convertInsertHandlerGeneratedTextFile"
+    },
+    {
+      "id": "Convert",
+      "type": 6,
+      "from": 7,
+      "to": 7
+    },
+    {
+      "id": "handleInsertConvert",
+      "type": 8,
+      "from": "Convert",
+      "to": "convertInsertHandler"
+    }
+  ],
+  "errors": [],
+  "dependencies": [
+    {
+      "name": "@deep-foundation/core",
+      "version": "0.0.2"
+    },
+    {
+      "name": "@deep-foundation/tsx",
+      "version": "0.0.5"
+    }
+  ]
+}
